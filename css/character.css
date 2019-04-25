@@ -1,0 +1,49 @@
+table, td {
+    border: 1px solid black;
+}
+
+table {
+    table-layout: fixed;
+    width: 300px;
+    height: 500px;
+}
+
+
+.radarChart {
+    width: 200px;
+    height: 500px;
+}
+
+.webs{
+    fill: white;
+    fill-opacity: 0.5;
+    stroke: black;
+    stroke-dasharray: 10 5;
+}
+
+.line {
+    fill: black;
+
+}
+
+.areas {
+    fill: lightgray;
+}
+
+#container {
+    width: 500px;
+    overflow: hidden;
+}
+#divTable {
+    width: 300px;
+    float:left;
+}
+#divRadar {
+    height: 500px;
+    overflow: hidden;
+    border: 1px solid black;
+}
+#radarChart {
+    width: 200px;
+    height: 500px;
+}

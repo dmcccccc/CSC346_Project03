@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Success</title>
+</head>
+<body>
+    <h> Login Success. Re-direct you to the user page after 3 seconds.</h>
+</body>
+<script>
+    function sleep(t) {
+        setTimeout(redirect,t)
+    }
+
+    function redirect() {
+        var url = window.location.href;
+        window.location.href = "user.html?" + url.split("?")[1];
+    }
+
+    sleep(3000);
+</script>
+</html>

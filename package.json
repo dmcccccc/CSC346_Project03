@@ -1,0 +1,22 @@
+{
+  "name": "csc346_project02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmcccccc/CSC346_Project02.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmcccccc/CSC346_Project02/issues"
+  },
+  "homepage": "https://github.com/dmcccccc/CSC346_Project02#readme",
+  "devDependencies": {
+    "express": "^4.16.4"
+  }
+}
