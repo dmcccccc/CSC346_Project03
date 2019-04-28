@@ -18,5 +18,8 @@
   "homepage": "https://github.com/dmcccccc/CSC346_Project02#readme",
   "devDependencies": {
     "express": "^4.16.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0"
   }
 }
