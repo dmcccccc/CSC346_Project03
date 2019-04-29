@@ -135,7 +135,7 @@
       // get all comment and sent it back as JSON
       case "query": {
         var username = con.escape(req.query.username);
-        const password = con.escape(crypto.createHash("sha1").update(req.query.password, "utf8").digest("hex"));
+        const password = crypto.createHash("sha1").update(req.query.password, "utf8").digest("hex");
         var query = 'SELECT * FROM user WHERE username =' + username;
         console.log("query = " + query);
         con.query(query, function (err, result, fields) {
