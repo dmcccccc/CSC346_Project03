@@ -20,8 +20,8 @@
     "express": "^4.16.4"
   },
   "dependencies": {
-    "aws-sdk": "^2.444.0",
     "body-parser": "^1.19.0",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "mysql": "^2.17.1"
   }
 }
