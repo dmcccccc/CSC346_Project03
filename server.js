@@ -27,6 +27,14 @@
     if (err) throw err;
     console.log("Connected!");
   });
+  
+  // add a sha1 hash function
+  const crypto = require("crypto");
+  const hash = crypto.createHash("sha1");
+
+  console.log("testing hash function");
+  var hpw = hash.update("password", "utf8");
+  console.log(hpw.digest("hex"));
 
   // set custom parameter
   app.use(function(req, res, next) { 
@@ -51,7 +59,10 @@
     switch(command) {
       case "createAccount": {
         var username = req.body.username;
-        const password = req.body.password;
+		// only store hashed passwords
+		// problem will be if user forget password it cannot be recovered
+		// user forget password won't be handled for now
+        const password = crypto.createHash("sha1").update(req.body.password, "utf8").digest("hex");
         var query = 'INSERT INTO user (username, pw) VALUES (\'' + username + '\', \'' + password + '\')';
         console.log("query = " + query);
         con.query(query, function (err, result) {
@@ -129,7 +140,7 @@
       // get all comment and sent it back as JSON
       case "query": {
         var username = req.query.username;
-        const password = req.query.password;
+        const password = crypto.createHash("sha1").update(req.query.password, "utf8").digest("hex");
         var query = 'SELECT * FROM user WHERE username = \'' + username + '\'';
         console.log("query = " + query);
         con.query(query, function (err, result, fields) {
@@ -139,8 +150,8 @@
             res.send("fail");
             return;
           }
-          console.log(result[0].pw.length);
-          console.log(password.length);
+          console.log(result);
+          console.log(password);
           if (result[0].pw == password){
             res.send("success");
           } else {
