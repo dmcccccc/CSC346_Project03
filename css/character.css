@@ -32,6 +32,7 @@ table {
 
 #container {
     width: 500px;
+    height: 650px;
     overflow: hidden;
 }
 #divTable {
@@ -39,11 +40,16 @@ table {
     float:left;
 }
 #divRadar {
-    height: 500px;
+    height: 600px;
     overflow: hidden;
     border: 1px solid black;
 }
 #radarChart {
     width: 200px;
-    height: 500px;
+    height: 550px;
+}
+#image {
+    width: 300px;
+    height: 100px;
+    border: 1px solid black;
 }

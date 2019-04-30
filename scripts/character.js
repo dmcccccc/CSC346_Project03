@@ -20,11 +20,48 @@ function query() {
         .then(function (responseText) {
             let q = JSON.parse(responseText);
             setTable(q);
-            setRadarChart(q)
+            setRadarChart(q);
+            setPhoto(q);
         })
         .catch(function (error) {
             console.log(error);
         });
+}
+
+function setPhoto(q) {
+    var result = q[0];
+    var charactertName = result.characterName;
+
+    // Imports the Google Cloud client library
+    const {Storage} = require('@google-cloud/storage');
+
+    // Creates a client
+    const storage = new Storage();
+
+    const bucketName = 'csc346project03photo';
+    const srcFilename = charactertName + '.jpg';
+    const destFilename = charactertName + '.jpg';
+
+    const options = {
+        // The path to which the file should be downloaded, e.g. "./file.txt"
+        destination: './image/' + destFilename,
+    };
+
+    // Downloads the file
+    storage
+        .bucket(bucketName)
+        .file(srcFilename)
+        .download(options);
+
+    console.log(
+        `gs://${bucketName}/${srcFilename} downloaded to ${destFilename}.`
+    );
+
+    var imageDiv = document.getElementById("image")
+    var img = new Image(100,100);
+    img.id = "photo";
+    img.src = './image/' + destFilename;
+    imageDiv.appendChild(img);
 }
 
 // Setup tables

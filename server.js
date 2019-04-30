@@ -38,7 +38,16 @@
           "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-  
+
+  // Imports the Google Cloud client library
+  const {Storage} = require('@google-cloud/storage');
+
+  // Creates a client
+  const storage = new Storage();
+
+  // Google bucket name
+  const bucketName = 'csc346project03photo';
+
   // set public access
 //  app.use(express.static("public"));
   
@@ -71,6 +80,22 @@
         break;
       }
       case "createCharacter": {
+        const filename = con.escape(req.body.photofilename);
+          // Uploads a local file to the bucket
+          storage.bucket(bucketName).upload(filename, {
+            // Support for HTTP requests made with `Accept-Encoding: gzip`
+              gzip: true,
+              // By setting the option `destination`, you can change the name of the
+              // object you are uploading to a bucket.
+              destination: con.escape(req.body.characterName) + '.jpg',
+              metadata: {
+                // Enable long-lived HTTP caching headers
+                  // Use only if the contents of the file will never change
+                  // (If the contents will change, use cacheControl: 'no-cache')
+                  cacheControl: 'public, max-age=31536000',
+              },
+          });
+          console.log(`${filename} uploaded to ${bucketName}.`);
 
         var cols = "username, characterName, lvl, role, strength, constitution,"
                    + "dexterity, intelligence, wisdom, charisma"
@@ -113,6 +138,7 @@
         });
         break;
       }
+
       default: {
         console.log("invalid command");
         break;
@@ -156,6 +182,8 @@
         break;
       }
       case "getCharacters": {
+
+
         console.log("getting characters...");
         var username = con.escape(req.query.username);
         console.log("username = " + username);

@@ -1,6 +1,22 @@
 window.onload = function() {
+    document.getElementById("img_input").onchange = photoUpload;
   document.getElementById("create").onclick = query;
 };
+
+function photoUpload(e) {
+    var file = e.target.files[0];
+    if (!file.type.match('image.*')) {
+        return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(arg) {
+        var img = new Image(200,200);
+        img.id = "photo";
+        img.src = arg.target.result;
+        document.getElementById("preview_box").appendChild(img);
+    }
+}
 
 function query() {
 
@@ -22,6 +38,7 @@ function query() {
       var intelligence =  document.getElementById("intelligence").value;
       var wisdom =  document.getElementById("wisdom").value;
       var charisma =  document.getElementById("charisma").value;
+      var photofilename = document.getElementById("photo").src;
 
     console.log("level = " + level);
 
@@ -35,7 +52,8 @@ function query() {
             dexterity: dexterity,
             intelligence: intelligence,
             wisdom: wisdom,
-            charisma: charisma };
+            charisma: charisma,
+            photofilename: photofilename};
     const fetchOptions = {
       method : 'POST',
       headers : {
