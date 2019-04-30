@@ -40,13 +40,13 @@
   });
 
   // Imports the Google Cloud client library
-  const {Storage} = require('@google-cloud/storage');
+//  const {Storage} = require('@google-cloud/storage');
 
   // Creates a client
-  const storage = new Storage();
+//  const storage = new Storage();
 
   // Google bucket name
-  const bucketName = 'csc346project03photo';
+//  const bucketName = 'csc346project03photo';
 
   require('isomorphic-fetch'); // or another library of choice.
   var Dropbox = require('dropbox').Dropbox;
