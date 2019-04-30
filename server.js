@@ -27,6 +27,9 @@
     if (err) throw err;
     console.log("Connected!");
   });
+  
+  // add a sha1 hash function
+  const crypto = require("crypto");
 
   // set custom parameter
   app.use(function(req, res, next) { 
@@ -50,9 +53,12 @@
 
     switch(command) {
       case "createAccount": {
-        var username = req.body.username;
-        const password = req.body.password;
-        var query = 'INSERT INTO user (username, pw) VALUES (\'' + username + '\', \'' + password + '\')';
+        var username = con.escape(req.body.username);
+		// only store hashed passwords
+		// problem will be if user forget password it cannot be recovered
+		// user forget password won't be handled for now
+        const password = con.escape(crypto.createHash("sha1").update(req.body.password, "utf8").digest("hex"));
+        var query = 'INSERT INTO user (username, pw) VALUES (' + username + ', ' + password+ ')';
         console.log("query = " + query);
         con.query(query, function (err, result) {
           if (err) {
@@ -71,16 +77,16 @@
 
         var query = 'INSERT INTO characters ('
             + cols + ')'
-            + 'VALUES (\''
-            + req.body.username + '\', \'' + req.body.characterName + '\' ,'
-            + req.body.level + ', \''
-            + req.body.role + '\', '
-            + req.body.strength + ', '
-            + req.body.constitution + ', '
-            + req.body.dexterity + ', '
-            + req.body.intelligence + ', '
-            + req.body.wisdom + ', '
-            + req.body.charisma + ')';
+            + 'VALUES ('
+            + con.escape(req.body.username) + ', ' + con.escape(req.body.characterName) + ', '
+            + con.escape(req.body.level) + ', '
+            + con.escape(req.body.role) + ', '
+            + con.escape(req.body.strength) + ', '
+            + con.escape(req.body.constitution) + ', '
+            + con.escape(req.body.dexterity) + ', '
+            + con.escape(req.body.intelligence) + ', '
+            + con.escape(req.body.wisdom) + ', '
+            + con.escape(req.body.charisma) + ')';
         console.log("query = " + query);
         con.query(query, function (err, result) {
           if (err) {
@@ -93,9 +99,9 @@
         break;
       }
       case "deleteCharacter": {
-        var username = req.body.username;
-        var characterName = req.body.characterName;
-        var query = 'DELETE FROM characters WHERE username=\'' + username + '\' AND characterName=\'' + characterName + '\'';
+        var username = con.escape(req.body.username);
+        var characterName = con.escape(req.body.characterName);
+        var query = 'DELETE FROM characters WHERE username=' + username + ' AND characterName=' + characterName;
         console.log("query = " + query);
         con.query(query, function (err, result) {
           if (err) {
@@ -128,9 +134,9 @@
     switch(command){
       // get all comment and sent it back as JSON
       case "query": {
-        var username = req.query.username;
-        const password = req.query.password;
-        var query = 'SELECT * FROM user WHERE username = \'' + username + '\'';
+        var username = con.escape(req.query.username);
+        const password = crypto.createHash("sha1").update(req.query.password, "utf8").digest("hex");
+        var query = 'SELECT * FROM user WHERE username =' + username;
         console.log("query = " + query);
         con.query(query, function (err, result, fields) {
           if (err) throw err;
@@ -139,8 +145,8 @@
             res.send("fail");
             return;
           }
-          console.log(result[0].pw.length);
-          console.log(password.length);
+          console.log(result);
+          console.log(password);
           if (result[0].pw == password){
             res.send("success");
           } else {
@@ -151,10 +157,10 @@
       }
       case "getCharacters": {
         console.log("getting characters...");
-        var username = req.query.username;
+        var username = con.escape(req.query.username);
         console.log("username = " + username);
 
-        var query = 'SELECT * FROM characters WHERE username=\'' + username + '\'';
+        var query = 'SELECT * FROM characters WHERE username=' + username;
         con.query(query, function(error, result, fields) {
           console.log(result);
           res.send(JSON.stringify(result));
@@ -163,10 +169,10 @@
       }
       case "getCharacter": {
         console.log("getting character...");
-        var id = req.query.id;
+        var id = con.escape(req.query.id);
         console.log("id = " + id);
 
-        var query = 'SELECT * FROM characters WHERE id=\'' + id + '\'';
+        var query = 'SELECT * FROM characters WHERE id=' + id;
         con.query(query, function(error, result, fields) {
           console.log(result);
           res.send(JSON.stringify(result));
