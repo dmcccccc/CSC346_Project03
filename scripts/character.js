@@ -30,37 +30,54 @@ function query() {
 
 function setPhoto(q) {
     var result = q[0];
-    var charactertName = result.characterName;
+    //var charactertName = result.characterName;
 
     // Imports the Google Cloud client library
-    const {Storage} = require('@google-cloud/storage');
+   // const {Storage} = require('@google-cloud/storage');
 
     // Creates a client
-    const storage = new Storage();
+   // const storage = new Storage();
 
-    const bucketName = 'csc346project03photo';
-    const srcFilename = charactertName + '.jpg';
-    const destFilename = charactertName + '.jpg';
+   // const bucketName = 'csc346project03photo';
+   // const srcFilename = charactertName + '.jpg';
+    //const destFilename = charactertName + '.jpg';
 
-    const options = {
+    //const options = {
         // The path to which the file should be downloaded, e.g. "./file.txt"
-        destination: './image/' + destFilename,
-    };
+      //  destination: './image/' + destFilename,
+    //};
 
     // Downloads the file
-    storage
-        .bucket(bucketName)
-        .file(srcFilename)
-        .download(options);
+    //storage
+      //  .bucket(bucketName)
+        //.file(srcFilename)
+        //.download(options);
 
-    console.log(
-        `gs://${bucketName}/${srcFilename} downloaded to ${destFilename}.`
-    );
+    //console.log(
+     //   `gs://${bucketName}/${srcFilename} downloaded to ${destFilename}.`
+    //);
+
+    // var ACCESS_TOKEN = 'XWBvqWaFf2AAAAAAAAAAE9GJQZZpOVL0AUhx9AFeZLx7K_jloUv7LXrLVifNbcRJ';
+    // var SHARED_LINK = 'https://www.dropbox.com/s/u8trf0n8eamgg31/' + result.photofilename;
+    // var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+    // dbx.sharingGetSharedLinkFile({url: SHARED_LINK})
+    //     .then(function(data) {
+    //         var downloadUrl = URL.createObjectURL(data.fileBlob);
+    //         var downloadButton = document.createElement('a');
+    //         downloadButton.setAttribute('href', downloadUrl);
+    //         downloadButton.setAttribute('download', data.name);
+    //         downloadButton.setAttribute('class', 'button');
+    //         downloadButton.innerText = 'Download: ' + data.name;
+    //         document.getElementById('results').appendChild(downloadButton);
+    //     })
+    //     .catch(function(error) {
+    //         console.error(error);
+    //     });
 
     var imageDiv = document.getElementById("image")
     var img = new Image(100,100);
     img.id = "photo";
-    img.src = './image/' + destFilename;
+    img.src = 'https://www.dropbox.com/s/u8trf0n8eamgg31/' + result.photofilename;
     imageDiv.appendChild(img);
 }
 

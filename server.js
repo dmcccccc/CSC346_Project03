@@ -48,6 +48,17 @@
   // Google bucket name
   const bucketName = 'csc346project03photo';
 
+  require('isomorphic-fetch'); // or another library of choice.
+  var Dropbox = require('dropbox').Dropbox;
+  var dbx = new Dropbox({ accessToken: 'XWBvqWaFf2AAAAAAAAAAE9GJQZZpOVL0AUhx9AFeZLx7K_jloUv7LXrLVifNbcRJ' });
+  dbx.filesListFolder({path: ''})
+      .then(function(response) {
+          console.log(response);
+      })
+      .catch(function(error) {
+          console.log(error);
+      });
+
   // set public access
 //  app.use(express.static("public"));
   
@@ -80,22 +91,23 @@
         break;
       }
       case "createCharacter": {
-        const filename = con.escape(req.body.photofilename);
+        //const photofilename = con.escape(req.body.photofilename);
           // Uploads a local file to the bucket
-          storage.bucket(bucketName).upload(filename, {
+          //storage.bucket(bucketName).upload(filename, {
             // Support for HTTP requests made with `Accept-Encoding: gzip`
-              gzip: true,
+              //gzip: true,
               // By setting the option `destination`, you can change the name of the
               // object you are uploading to a bucket.
-              destination: con.escape(req.body.characterName) + '.jpg',
-              metadata: {
+              //destination: con.escape(req.body.characterName) + '.jpg',
+              //metadata: {
                 // Enable long-lived HTTP caching headers
                   // Use only if the contents of the file will never change
                   // (If the contents will change, use cacheControl: 'no-cache')
-                  cacheControl: 'public, max-age=31536000',
-              },
-          });
-          console.log(`${filename} uploaded to ${bucketName}.`);
+                  //cacheControl: 'public, max-age=31536000',
+              //},
+          //});
+          //console.log(`${filename} uploaded to ${bucketName}.`);
+
 
         var cols = "username, characterName, lvl, role, strength, constitution,"
                    + "dexterity, intelligence, wisdom, charisma"
@@ -111,7 +123,8 @@
             + con.escape(req.body.dexterity) + ', '
             + con.escape(req.body.intelligence) + ', '
             + con.escape(req.body.wisdom) + ', '
-            + con.escape(req.body.charisma) + ')';
+            + con.escape(req.body.charisma) + ', '
+            + con.escape(req.body.photofilename) + ')';
         console.log("query = " + query);
         con.query(query, function (err, result) {
           if (err) {
