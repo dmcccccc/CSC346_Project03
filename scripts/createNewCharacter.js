@@ -17,6 +17,8 @@ function photoUpload(e) {
         document.getElementById("preview_box").appendChild(img);
     }
 
+    var Dropbox = require('dropbox').Dropbox;
+
     const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
     var ACCESS_TOKEN = 'XWBvqWaFf2AAAAAAAAAAE9GJQZZpOVL0AUhx9AFeZLx7K_jloUv7LXrLVifNbcRJ';
     var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
@@ -66,6 +68,7 @@ function photoUpload(e) {
                 });
             }
         }, Promise.resolve());
+}
 }
 
 function query() {

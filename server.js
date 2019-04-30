@@ -110,7 +110,7 @@
 
 
         var cols = "username, characterName, lvl, role, strength, constitution,"
-                   + "dexterity, intelligence, wisdom, charisma"
+                   + "dexterity, intelligence, wisdom, charisma, photofilename"
 
         var query = 'INSERT INTO characters ('
             + cols + ')'

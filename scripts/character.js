@@ -57,9 +57,10 @@ function setPhoto(q) {
      //   `gs://${bucketName}/${srcFilename} downloaded to ${destFilename}.`
     //);
 
-    // var ACCESS_TOKEN = 'XWBvqWaFf2AAAAAAAAAAE9GJQZZpOVL0AUhx9AFeZLx7K_jloUv7LXrLVifNbcRJ';
+    var Dropbox = require("dropbox");
+    var ACCESS_TOKEN = 'XWBvqWaFf2AAAAAAAAAAE9GJQZZpOVL0AUhx9AFeZLx7K_jloUv7LXrLVifNbcRJ';
     // var SHARED_LINK = 'https://www.dropbox.com/s/u8trf0n8eamgg31/' + result.photofilename;
-    // var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+    var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
     // dbx.sharingGetSharedLinkFile({url: SHARED_LINK})
     //     .then(function(data) {
     //         var downloadUrl = URL.createObjectURL(data.fileBlob);
@@ -77,7 +78,7 @@ function setPhoto(q) {
     var imageDiv = document.getElementById("image")
     var img = new Image(100,100);
     img.id = "photo";
-    img.src = 'https://www.dropbox.com/s/u8trf0n8eamgg31/' + result.photofilename;
+    img.src = 'https://www.dropbox.com/s/u8trf0n8eamgg31/' + result.photofilename + "?raw=1";
     imageDiv.appendChild(img);
 }
 
